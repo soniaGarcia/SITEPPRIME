@@ -1,0 +1,177 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+    <ui:composition>
+        <h:form id="cat_sede_logToolbar" prependId="false">
+            <p:toolbar>
+                <f:facet name="left">
+                    <p:commandButton value="Nuevo" title="Nuevo" icon="fa fa-plus" actionListener="#{cat_sede_logView.prepareNew}" process="@form" update="cat_sede_logDetail" oncomplete="PF('cat_sede_logDialog').show()"/>
+                </f:facet>
+            </p:toolbar>
+        </h:form>
+         <h:form id="cat_sede_logMenuContext" prependId="false">
+            <p:contextMenu for="cat_sede_logList">
+                <p:menuitem value="Editar" icon="ui-icon-pencil" actionListener="#{cat_sede_logView.prepareEdit}" process="@form" update="cat_sede_logDetail" oncomplete="PF('cat_sede_logDialog').show()" />
+                <p:menuitem value="Eliminar"  icon="ui-icon-trash" process="@form" update="cat_sede_logList" actionListener="#{cat_sede_logView.delete}" />
+                <p:menuitem value="Ver Detalle" icon="ui-icon-search" actionListener="#{cat_sede_logView.prepareView}" process="@form" update="cat_sede_logViewDetail" />
+            </p:contextMenu>     
+            <p:dataTable var="item" value="#{cat_sede_logView.lazyModel}" paginator="true" rows="10"
+                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                     rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{cat_sede_logView.selectedItem}" id="cat_sede_logList" lazy="true">
+
+                <p:column headerText="ID_SEDE_LOG" sortBy="#{item.ID_SEDE_LOG}" filterBy="#{item.ID_SEDE_LOG}">
+                   <h:outputText value="#{item.ID_SEDE_LOG}" />
+                </p:column>
+
+                <p:column headerText="ID_SEDE" sortBy="#{item.ID_SEDE}" filterBy="#{item.ID_SEDE}">
+                   <h:outputText value="#{item.ID_SEDE}" />
+                </p:column>
+
+                <p:column headerText="ID_DEPARTAMENTO" sortBy="#{item.ID_DEPARTAMENTO}" filterBy="#{item.ID_DEPARTAMENTO}">
+                   <h:outputText value="#{item.ID_DEPARTAMENTO}" />
+                </p:column>
+
+                <p:column headerText="ID_MUNICIPIO" sortBy="#{item.ID_MUNICIPIO}" filterBy="#{item.ID_MUNICIPIO}">
+                   <h:outputText value="#{item.ID_MUNICIPIO}" />
+                </p:column>
+
+                <p:column headerText="ID_TIPO_SEDE" sortBy="#{item.ID_TIPO_SEDE}" filterBy="#{item.ID_TIPO_SEDE}">
+                   <h:outputText value="#{item.ID_TIPO_SEDE}" />
+                </p:column>
+
+                <p:column headerText="NOMBRE" sortBy="#{item.NOMBRE}" filterBy="#{item.NOMBRE}">
+                   <h:outputText value="#{item.NOMBRE}" />
+                </p:column>
+
+                <p:column headerText="DIRECCION" sortBy="#{item.DIRECCION}" filterBy="#{item.DIRECCION}">
+                   <h:outputText value="#{item.DIRECCION}" />
+                </p:column>
+
+                <p:column headerText="OBSERVACIONES" sortBy="#{item.OBSERVACIONES}" filterBy="#{item.OBSERVACIONES}">
+                   <h:outputText value="#{item.OBSERVACIONES}" />
+                </p:column>
+
+                <p:column headerText="JUSTIFICACION" sortBy="#{item.JUSTIFICACION}" filterBy="#{item.JUSTIFICACION}">
+                   <h:outputText value="#{item.JUSTIFICACION}" />
+                </p:column>
+
+                <p:column headerText="DEPENDENCIA" sortBy="#{item.DEPENDENCIA}" filterBy="#{item.DEPENDENCIA}">
+                   <h:outputText value="#{item.DEPENDENCIA}" />
+                </p:column>
+
+                <p:column headerText="F_CREA_FECHA_LOG" sortBy="#{item.F_CREA_FECHA_LOG}" filterBy="#{item.F_CREA_FECHA_LOG}">
+                   <h:outputText value="#{item.F_CREA_FECHA_LOG}" />
+                </p:column>
+
+                <p:column headerText="F_CREA_FECHA" sortBy="#{item.F_CREA_FECHA}" filterBy="#{item.F_CREA_FECHA}">
+                   <h:outputText value="#{item.F_CREA_FECHA}" />
+                </p:column>
+
+                <p:column headerText="F_MOD_FECHA" sortBy="#{item.F_MOD_FECHA}" filterBy="#{item.F_MOD_FECHA}">
+                   <h:outputText value="#{item.F_MOD_FECHA}" />
+                </p:column>
+
+                <p:column headerText="S_CREA_USUARIO" sortBy="#{item.S_CREA_USUARIO}" filterBy="#{item.S_CREA_USUARIO}">
+                   <h:outputText value="#{item.S_CREA_USUARIO}" />
+                </p:column>
+
+                <p:column headerText="S_MOD_USUARIO" sortBy="#{item.S_MOD_USUARIO}" filterBy="#{item.S_MOD_USUARIO}">
+                   <h:outputText value="#{item.S_MOD_USUARIO}" />
+                </p:column>
+
+                <p:column headerText="CODIGO_SEDE" sortBy="#{item.CODIGO_SEDE}" filterBy="#{item.CODIGO_SEDE}">
+                   <h:outputText value="#{item.CODIGO_SEDE}" />
+                </p:column>
+
+                <p:column headerText="CODIGO_SOLICITUD" sortBy="#{item.CODIGO_SOLICITUD}" filterBy="#{item.CODIGO_SOLICITUD}">
+                   <h:outputText value="#{item.CODIGO_SOLICITUD}" />
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+        <p:dialog header="Registro de cat_sede_log" widgetVar="cat_sede_logDialog" appendTo="@(body)" modal="true" showEffect="fade" hideEffect="fade" resizable="false" minimizable="true" maximizable="true" position="center">
+            <p:outputPanel id="cat_sede_logDetail" >
+                <p:messages id="cat_sede_logMessages" showDetail="true" autoUpdate="true" closable="true" />
+
+                <p:outputPanel id="cat_sede_logNewDetail" style="text-align:center;max-height:900px;overflow:auto" rendered="#{not empty cat_sede_logView.selectedItem and (cat_sede_logView.status.description=='NEW' || cat_sede_logView.status.description=='EDIT')}" >
+                    <h:form id="cat_sede_logNewForm" prependId="false">
+                        <p:panelGrid columns="2" columnClasses="label,value">
+
+                            <h:outputLabel for="in_id_sede_log" value="ID_SEDE_LOG:" />
+                            <h:inputText id="in_id_sede_log" value="#{cat_sede_logView.selectedItem.ID_SEDE_LOG}" />
+
+                            <h:outputLabel for="in_id_sede" value="ID_SEDE:" />
+                            <h:inputText id="in_id_sede" value="#{cat_sede_logView.selectedItem.ID_SEDE}" />
+
+                            <h:outputLabel for="in_id_departamento" value="ID_DEPARTAMENTO:" />
+                            <h:inputText id="in_id_departamento" value="#{cat_sede_logView.selectedItem.ID_DEPARTAMENTO}" />
+
+                            <h:outputLabel for="in_id_municipio" value="ID_MUNICIPIO:" />
+                            <h:inputText id="in_id_municipio" value="#{cat_sede_logView.selectedItem.ID_MUNICIPIO}" />
+
+                            <h:outputLabel for="in_id_tipo_sede" value="ID_TIPO_SEDE:" />
+                            <h:inputText id="in_id_tipo_sede" value="#{cat_sede_logView.selectedItem.ID_TIPO_SEDE}" />
+
+                            <h:outputLabel for="in_nombre" value="NOMBRE:" />
+                            <h:inputText id="in_nombre" value="#{cat_sede_logView.selectedItem.NOMBRE}" />
+
+                            <h:outputLabel for="in_direccion" value="DIRECCION:" />
+                            <h:inputText id="in_direccion" value="#{cat_sede_logView.selectedItem.DIRECCION}" />
+
+                            <h:outputLabel for="in_observaciones" value="OBSERVACIONES:" />
+                            <h:inputText id="in_observaciones" value="#{cat_sede_logView.selectedItem.OBSERVACIONES}" />
+
+                            <h:outputLabel for="in_justificacion" value="JUSTIFICACION:" />
+                            <h:inputText id="in_justificacion" value="#{cat_sede_logView.selectedItem.JUSTIFICACION}" />
+
+                            <h:outputLabel for="in_dependencia" value="DEPENDENCIA:" />
+                            <h:inputText id="in_dependencia" value="#{cat_sede_logView.selectedItem.DEPENDENCIA}" />
+
+                            <h:outputLabel for="in_f_crea_fecha_log" value="F_CREA_FECHA_LOG:" />
+                            <p:calendar id="in_f_crea_fecha_log" value="#{cat_sede_logView.selectedItem.F_CREA_FECHA_LOG}" showOn="button" pattern="MM/dd/yyyy" navigator="true" yearRange="c-115:c+10" />
+
+                            <h:outputLabel for="in_f_crea_fecha" value="F_CREA_FECHA:" />
+                            <p:calendar id="in_f_crea_fecha" value="#{cat_sede_logView.selectedItem.F_CREA_FECHA}" showOn="button" pattern="MM/dd/yyyy" navigator="true" yearRange="c-115:c+10" />
+
+                            <h:outputLabel for="in_f_mod_fecha" value="F_MOD_FECHA:" />
+                            <p:calendar id="in_f_mod_fecha" value="#{cat_sede_logView.selectedItem.F_MOD_FECHA}" showOn="button" pattern="MM/dd/yyyy" navigator="true" yearRange="c-115:c+10" />
+
+                            <h:outputLabel for="in_s_crea_usuario" value="S_CREA_USUARIO:" />
+                            <h:inputText id="in_s_crea_usuario" value="#{cat_sede_logView.selectedItem.S_CREA_USUARIO}" />
+
+                            <h:outputLabel for="in_s_mod_usuario" value="S_MOD_USUARIO:" />
+                            <h:inputText id="in_s_mod_usuario" value="#{cat_sede_logView.selectedItem.S_MOD_USUARIO}" />
+
+                            <h:outputLabel for="in_codigo_sede" value="CODIGO_SEDE:" />
+                            <h:inputText id="in_codigo_sede" value="#{cat_sede_logView.selectedItem.CODIGO_SEDE}" />
+
+                            <h:outputLabel for="in_codigo_solicitud" value="CODIGO_SOLICITUD:" />
+                            <h:inputText id="in_codigo_solicitud" value="#{cat_sede_logView.selectedItem.CODIGO_SOLICITUD}" />
+
+                            <br />
+                            <h:panelGrid columns="2">
+                                <p:commandButton styleClass="ui-priority-primary" value="Guardar" title="Guardar" icon="fa fa-fw fa-save" actionListener="#{cat_sede_logView.save}" process="@form" update="@form, cat_sede_logMessages, cat_sede_logDetail, cat_sede_logList"  oncomplete="handleSubmit(xhr,status,args,'cat_sede_logDialog');" />
+                                <p:commandButton value="Cancelar" title="Cancelar" icon="fa fa-fw fa-rotate-left" onclick="PF('cat_sede_logDialog').hide();" />
+                            </h:panelGrid>
+                        </p:panelGrid>
+                    </h:form>
+                </p:outputPanel>
+            </p:outputPanel>
+        </p:dialog>
+        <p:panel id="cat_sede_logViewDetail" header="Detalle de CAT_SEDE_LOG">
+            <p:outputPanel  rendered="#{cat_sede_logView.status.description=='VIEW' and (not empty cat_sede_logView.selectedItem)}">
+
+                <p:tabView dynamic="true" cache="true" id="cat_sede_logTabDetail" prependId="false">
+
+
+
+
+                </p:tabView>
+            </p:outputPanel>
+        </p:panel>
+    </ui:composition>    
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition>
+        <h:form id="cat_embalajeToolbar" prependId="false">
+            <p:toolbar>
+                <f:facet name="left">
+                    <p:commandButton value="Nuevo" title="Nuevo" icon="fa fa-plus" actionListener="#{cat_embalajeView.prepareNew}" process="@form" update="cat_embalajeDetail" oncomplete="PF('cat_embalajeDialog').show()"/>
+                </f:facet>
+            </p:toolbar>
+        </h:form>
+         <h:form id="cat_embalajeMenuContext" prependId="false">
+            <p:contextMenu for="cat_embalajeList">
+                <p:menuitem value="Editar" icon="ui-icon-pencil" actionListener="#{cat_embalajeView.prepareEdit}" process="@form" update="cat_embalajeDetail" oncomplete="PF('cat_embalajeDialog').show()" />
+                <p:menuitem value="Eliminar"  icon="ui-icon-trash" process="@form" update="cat_embalajeList" actionListener="#{cat_embalajeView.delete}" />
+                <p:menuitem value="Ver Detalle" icon="ui-icon-search" actionListener="#{cat_embalajeView.prepareView}" process="@form" update="cat_embalajeViewDetail" />
+            </p:contextMenu>     
+            <p:dataTable var="item" value="#{cat_embalajeView.lazyModel}" paginator="true" rows="10"
+                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                     rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{cat_embalajeView.selectedItem}" id="cat_embalajeList" lazy="true">
+
+                <p:column headerText="ID_EMBALAJE" sortBy="#{item.id}" filterBy="#{item.id}">
+                   <h:outputText value="#{item.id}" />
+                </p:column>
+
+                <p:column headerText="cODIGO" sortBy="#{item.codigo}" filterBy="#{item.codigo}">
+                   <h:outputText value="#{item.codigo}" />
+                </p:column>
+
+                <p:column headerText="tipo" sortBy="#{item.tipo}" filterBy="#{item.tipo}">
+                   <h:outputText value="#{item.tipo}" />
+                </p:column>
+
+                <p:column headerText="justificacion" sortBy="#{item.justificacion}" filterBy="#{item.justificacion}">
+                   <h:outputText value="#{item.justificacion}" />
+                </p:column>
+
+                <p:column headerText="f_CREA_FECHA" sortBy="#{item.f_CREA_FECHA}" filterBy="#{item.f_CREA_FECHA}">
+                   <h:outputText value="#{item.f_CREA_FECHA}" />
+                </p:column>
+
+                <p:column headerText="f_MOD_FECHA" sortBy="#{item.f_MOD_FECHA}" filterBy="#{item.f_MOD_FECHA}">
+                   <h:outputText value="#{item.f_MOD_FECHA}" />
+                </p:column>
+
+                <p:column headerText="s_CREA_USUARIO" sortBy="#{item.s_CREA_USUARIO}" filterBy="#{item.s_CREA_USUARIO}">
+                   <h:outputText value="#{item.s_CREA_USUARIO}" />
+                </p:column>
+
+                <p:column headerText="s_MOD_USUARIO" sortBy="#{item.s_MOD_USUARIO}" filterBy="#{item.s_MOD_USUARIO}">
+                   <h:outputText value="#{item.s_MOD_USUARIO}" />
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+        <p:dialog header="Registro de cat_embalaje" widgetVar="cat_embalajeDialog" appendTo="@(body)" modal="true" showEffect="fade" hideEffect="fade" resizable="false" minimizable="true" maximizable="true" position="center">
+            <p:outputPanel id="cat_embalajeDetail" >
+                <p:messages id="cat_embalajeMessages" showDetail="true" autoUpdate="true" closable="true" />
+
+                <p:outputPanel id="cat_embalajeNewDetail" style="text-align:center;max-height:900px;overflow:auto" rendered="#{not empty cat_embalajeView.selectedItem and (cat_embalajeView.status.description=='NEW' || cat_embalajeView.status.description=='EDIT')}" >
+                    <h:form id="cat_embalajeNewForm" prependId="false">
+                        <p:panelGrid columns="2" columnClasses="label,value">
+
+                            <h:outputLabel for="in_id_embalaje" value="ID_EMBALAJE:" />
+                            <h:inputText id="in_id_embalaje" value="#{cat_embalajeView.selectedItem.id}" />
+
+                            <h:outputLabel for="in_codigo" value="codigo" />
+                            <h:inputText id="in_codigo" value="#{cat_embalajeView.selectedItem.codigo}" />
+
+                            <h:outputLabel for="in_tipo" value="tipo:" />
+                            <h:inputText id="in_tipo" value="#{cat_embalajeView.selectedItem.tipo}" />
+
+                            <h:outputLabel for="in_justificacion" value="justificacion:" />
+                            <h:inputText id="in_justificacion" value="#{cat_embalajeView.selectedItem.justificacion}" />
+                            
+                            <h:outputLabel for="in_estado" value="estado" />
+                            <h:inputText id="in_estado" value="#{cat_embalajeView.selectedItem.idestado.id}" />
+
+                            <h:outputLabel for="in_f_crea_fecha" value="f_CREA_FECHA:" />
+                            <p:calendar id="in_f_crea_fecha" value="#{cat_embalajeView.selectedItem.f_crea_fecha}" showOn="button" pattern="MM/dd/yyyy" navigator="true" yearRange="c-115:c+10" />
+
+                            <h:outputLabel for="in_f_mod_fecha" value="f_MOD_FECHA:" />
+                            <p:calendar id="in_f_mod_fecha" value="#{cat_embalajeView.selectedItem.f_MOD_FECHA}" showOn="button" pattern="MM/dd/yyyy" navigator="true" yearRange="c-115:c+10" />
+
+                            <h:outputLabel for="in_s_crea_usuario" value="s_CREA_USUARIO:" />
+                            <h:inputText id="in_s_crea_usuario" value="#{cat_embalajeView.selectedItem.s_CREA_USUARIO}" />
+
+                            <h:outputLabel for="in_s_mod_usuario" value="s_MOD_USUARIO:" />
+                            <h:inputText id="in_s_mod_usuario" value="#{cat_embalajeView.selectedItem.s_MOD_USUARIO}" />
+
+                            <br />
+                            <h:panelGrid columns="2">
+                                <p:commandButton styleClass="ui-priority-primary" value="Guardar" title="Guardar" icon="fa fa-fw fa-save" actionListener="#{cat_embalajeView.save}" process="@form" update="@form, cat_embalajeMessages, cat_embalajeDetail, cat_embalajeList"  oncomplete="handleSubmit(xhr,status,args,'cat_embalajeDialog');" />
+                                <p:commandButton value="Cancelar" title="Cancelar" icon="fa fa-fw fa-rotate-left" onclick="PF('cat_embalajeDialog').hide();" />
+                            </h:panelGrid>
+                        </p:panelGrid>
+                    </h:form>
+                </p:outputPanel>
+            </p:outputPanel>
+        </p:dialog>
+        <p:panel id="cat_embalajeViewDetail" header="Detalle de CAT_EMBALAJE">
+            <p:outputPanel  rendered="#{cat_embalajeView.status.description=='VIEW' and (not empty cat_embalajeView.selectedItem)}">
+
+                <p:tabView dynamic="true" cache="true" id="cat_embalajeTabDetail" prependId="false">
+                
+                    <p:tab title="ING_DECOMISO">
+                        <!-- TODO: <ui:include src="../ing_decomiso/list.xhtml" /> -->
+                        TODO: descomentar include hacia "../ing_decomiso/list.xhtml"
+                    </p:tab>
+
+
+
+
+
+                </p:tabView>
+            </p:outputPanel>
+        </p:panel>
+    </ui:composition>    
+</html>

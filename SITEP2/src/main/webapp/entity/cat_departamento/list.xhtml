@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+    <ui:composition>
+        <h:form id="cat_departamentoToolbar" prependId="false">
+            <p:toolbar>
+                <f:facet name="left">
+                    <p:commandButton value="Nuevo" title="Nuevo" icon="fa fa-plus" actionListener="#{cat_departamentoView.prepareNew}" process="@form" update="cat_departamentoDetail" oncomplete="PF('cat_departamentoDialog').show()"/>
+                </f:facet>
+            </p:toolbar>
+        </h:form>
+         <h:form id="cat_departamentoMenuContext" prependId="false">
+            <p:contextMenu for="cat_departamentoList">
+                <p:menuitem value="Editar" icon="ui-icon-pencil" actionListener="#{cat_departamentoView.prepareEdit}" process="@form" update="cat_departamentoDetail" oncomplete="PF('cat_departamentoDialog').show()" />
+                <p:menuitem value="Eliminar"  icon="ui-icon-trash" process="@form" update="cat_departamentoList" actionListener="#{cat_departamentoView.delete}" />
+                <p:menuitem value="Ver Detalle" icon="ui-icon-search" actionListener="#{cat_departamentoView.prepareView}" process="@form" update="cat_departamentoViewDetail" />
+            </p:contextMenu>     
+            <p:dataTable var="item" value="#{cat_departamentoView.lazyModel}" paginator="true" rows="10"
+                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                     rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{cat_departamentoView.selectedItem}" id="cat_departamentoList" lazy="true">
+
+                <p:column headerText="ID_DEPARTAMENTO" sortBy="#{item.ID_DEPARTAMENTO}" filterBy="#{item.ID_DEPARTAMENTO}">
+                   <h:outputText value="#{item.ID_DEPARTAMENTO}" />
+                </p:column>
+
+                <p:column headerText="DESCRIPCION" sortBy="#{item.DESCRIPCION}" filterBy="#{item.DESCRIPCION}">
+                   <h:outputText value="#{item.DESCRIPCION}" />
+                </p:column>
+
+                <p:column headerText="F_CREA_FECHA" sortBy="#{item.F_CREA_FECHA}" filterBy="#{item.F_CREA_FECHA}">
+                   <h:outputText value="#{item.F_CREA_FECHA}" />
+                </p:column>
+
+                <p:column headerText="F_MOD_FECHA" sortBy="#{item.F_MOD_FECHA}" filterBy="#{item.F_MOD_FECHA}">
+                   <h:outputText value="#{item.F_MOD_FECHA}" />
+                </p:column>
+
+                <p:column headerText="S_CREA_USUARIO" sortBy="#{item.S_CREA_USUARIO}" filterBy="#{item.S_CREA_USUARIO}">
+                   <h:outputText value="#{item.S_CREA_USUARIO}" />
+                </p:column>
+
+                <p:column headerText="S_MOD_USUARIO" sortBy="#{item.S_MOD_USUARIO}" filterBy="#{item.S_MOD_USUARIO}">
+                   <h:outputText value="#{item.S_MOD_USUARIO}" />
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+        <p:dialog header="Registro de cat_departamento" widgetVar="cat_departamentoDialog" appendTo="@(body)" modal="true" showEffect="fade" hideEffect="fade" resizable="false" minimizable="true" maximizable="true" position="center">
+            <p:outputPanel id="cat_departamentoDetail" >
+                <p:messages id="cat_departamentoMessages" showDetail="true" autoUpdate="true" closable="true" />
+
+                <p:outputPanel id="cat_departamentoNewDetail" style="text-align:center;max-height:900px;overflow:auto" rendered="#{not empty cat_departamentoView.selectedItem and (cat_departamentoView.status.description=='NEW' || cat_departamentoView.status.description=='EDIT')}" >
+                    <h:form id="cat_departamentoNewForm" prependId="false">
+                        <p:panelGrid columns="2" columnClasses="label,value">
+
+                            <h:outputLabel for="in_id_departamento" value="ID_DEPARTAMENTO:" />
+                            <h:inputText id="in_id_departamento" value="#{cat_departamentoView.selectedItem.ID_DEPARTAMENTO}" />
+
+                            <h:outputLabel for="in_descripcion" value="DESCRIPCION:" />
+                            <h:inputText id="in_descripcion" value="#{cat_departamentoView.selectedItem.DESCRIPCION}" />
+
+                            <h:outputLabel for="in_f_crea_fecha" value="F_CREA_FECHA:" />
+                            <p:calendar id="in_f_crea_fecha" value="#{cat_departamentoView.selectedItem.F_CREA_FECHA}" showOn="button" pattern="MM/dd/yyyy" navigator="true" yearRange="c-115:c+10" />
+
+                            <h:outputLabel for="in_f_mod_fecha" value="F_MOD_FECHA:" />
+                            <p:calendar id="in_f_mod_fecha" value="#{cat_departamentoView.selectedItem.F_MOD_FECHA}" showOn="button" pattern="MM/dd/yyyy" navigator="true" yearRange="c-115:c+10" />
+
+                            <h:outputLabel for="in_s_crea_usuario" value="S_CREA_USUARIO:" />
+                            <h:inputText id="in_s_crea_usuario" value="#{cat_departamentoView.selectedItem.S_CREA_USUARIO}" />
+
+                            <h:outputLabel for="in_s_mod_usuario" value="S_MOD_USUARIO:" />
+                            <h:inputText id="in_s_mod_usuario" value="#{cat_departamentoView.selectedItem.S_MOD_USUARIO}" />
+
+                            <br />
+                            <h:panelGrid columns="2">
+                                <p:commandButton styleClass="ui-priority-primary" value="Guardar" title="Guardar" icon="fa fa-fw fa-save" actionListener="#{cat_departamentoView.save}" process="@form" update="@form, cat_departamentoMessages, cat_departamentoDetail, cat_departamentoList"  oncomplete="handleSubmit(xhr,status,args,'cat_departamentoDialog');" />
+                                <p:commandButton value="Cancelar" title="Cancelar" icon="fa fa-fw fa-rotate-left" onclick="PF('cat_departamentoDialog').hide();" />
+                            </h:panelGrid>
+                        </p:panelGrid>
+                    </h:form>
+                </p:outputPanel>
+            </p:outputPanel>
+        </p:dialog>
+        <p:panel id="cat_departamentoViewDetail" header="Detalle de CAT_DEPARTAMENTO">
+            <p:outputPanel  rendered="#{cat_departamentoView.status.description=='VIEW' and (not empty cat_departamentoView.selectedItem)}">
+
+                <p:tabView dynamic="true" cache="true" id="cat_departamentoTabDetail" prependId="false">
+                
+                    <p:tab title="CAT_SEDE">
+                        <!-- TODO: <ui:include src="../cat_sede/list.xhtml" /> -->
+                        TODO: descomentar include hacia "../cat_sede/list.xhtml"
+                    </p:tab>
+                
+                    <p:tab title="CAT_MUNICIPIO">
+                        <!-- TODO: <ui:include src="../cat_municipio/list.xhtml" /> -->
+                        TODO: descomentar include hacia "../cat_municipio/list.xhtml"
+                    </p:tab>
+
+
+
+                </p:tabView>
+            </p:outputPanel>
+        </p:panel>
+    </ui:composition>    
+</html>

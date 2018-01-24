@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+    <ui:composition>
+        <h:form id="ing_decomiso_imagenToolbar" prependId="false">
+            <p:toolbar>
+                <f:facet name="left">
+                    <p:commandButton value="Nuevo" title="Nuevo" icon="fa fa-plus" actionListener="#{ing_decomiso_imagenView.prepareNew}" process="@form" update="ing_decomiso_imagenDetail" oncomplete="PF('ing_decomiso_imagenDialog').show()"/>
+                </f:facet>
+            </p:toolbar>
+        </h:form>
+         <h:form id="ing_decomiso_imagenMenuContext" prependId="false">
+            <p:contextMenu for="ing_decomiso_imagenList">
+                <p:menuitem value="Editar" icon="ui-icon-pencil" actionListener="#{ing_decomiso_imagenView.prepareEdit}" process="@form" update="ing_decomiso_imagenDetail" oncomplete="PF('ing_decomiso_imagenDialog').show()" />
+                <p:menuitem value="Eliminar"  icon="ui-icon-trash" process="@form" update="ing_decomiso_imagenList" actionListener="#{ing_decomiso_imagenView.delete}" />
+                <p:menuitem value="Ver Detalle" icon="ui-icon-search" actionListener="#{ing_decomiso_imagenView.prepareView}" process="@form" update="ing_decomiso_imagenViewDetail" />
+            </p:contextMenu>     
+            <p:dataTable var="item" value="#{ing_decomiso_imagenView.lazyModel}" paginator="true" rows="10"
+                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                     rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{ing_decomiso_imagenView.selectedItem}" id="ing_decomiso_imagenList" lazy="true">
+
+                <p:column headerText="ID_DECOMISO_IMAGEN" sortBy="#{item.ID_DECOMISO_IMAGEN}" filterBy="#{item.ID_DECOMISO_IMAGEN}">
+                   <h:outputText value="#{item.ID_DECOMISO_IMAGEN}" />
+                </p:column>
+
+                <p:column headerText="ARCHIVO" sortBy="#{item.ARCHIVO}" filterBy="#{item.ARCHIVO}">
+                   <h:outputText value="#{item.ARCHIVO}" />
+                </p:column>
+
+                <p:column headerText="NOMBRE_ARCHIVO" sortBy="#{item.NOMBRE_ARCHIVO}" filterBy="#{item.NOMBRE_ARCHIVO}">
+                   <h:outputText value="#{item.NOMBRE_ARCHIVO}" />
+                </p:column>
+
+                <p:column headerText="F_CREA_FECHA_LOG" sortBy="#{item.F_CREA_FECHA_LOG}" filterBy="#{item.F_CREA_FECHA_LOG}">
+                   <h:outputText value="#{item.F_CREA_FECHA_LOG}" />
+                </p:column>
+
+                <p:column headerText="F_CREA_FECHA" sortBy="#{item.F_CREA_FECHA}" filterBy="#{item.F_CREA_FECHA}">
+                   <h:outputText value="#{item.F_CREA_FECHA}" />
+                </p:column>
+
+                <p:column headerText="F_MOD_FECHA" sortBy="#{item.F_MOD_FECHA}" filterBy="#{item.F_MOD_FECHA}">
+                   <h:outputText value="#{item.F_MOD_FECHA}" />
+                </p:column>
+
+                <p:column headerText="S_CREA_USUARIO" sortBy="#{item.S_CREA_USUARIO}" filterBy="#{item.S_CREA_USUARIO}">
+                   <h:outputText value="#{item.S_CREA_USUARIO}" />
+                </p:column>
+
+                <p:column headerText="S_MOD_USUARIO" sortBy="#{item.S_MOD_USUARIO}" filterBy="#{item.S_MOD_USUARIO}">
+                   <h:outputText value="#{item.S_MOD_USUARIO}" />
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+        <p:dialog header="Registro de ing_decomiso_imagen" widgetVar="ing_decomiso_imagenDialog" appendTo="@(body)" modal="true" showEffect="fade" hideEffect="fade" resizable="false" minimizable="true" maximizable="true" position="center">
+            <p:outputPanel id="ing_decomiso_imagenDetail" >
+                <p:messages id="ing_decomiso_imagenMessages" showDetail="true" autoUpdate="true" closable="true" />
+
+                <p:outputPanel id="ing_decomiso_imagenNewDetail" style="text-align:center;max-height:900px;overflow:auto" rendered="#{not empty ing_decomiso_imagenView.selectedItem and (ing_decomiso_imagenView.status.description=='NEW' || ing_decomiso_imagenView.status.description=='EDIT')}" >
+                    <h:form id="ing_decomiso_imagenNewForm" prependId="false">
+                        <p:panelGrid columns="2" columnClasses="label,value">
+
+                            <h:outputLabel for="in_id_decomiso_imagen" value="ID_DECOMISO_IMAGEN:" />
+                            <h:inputText id="in_id_decomiso_imagen" value="#{ing_decomiso_imagenView.selectedItem.ID_DECOMISO_IMAGEN}" />
+
+                            <h:outputLabel for="in_archivo" value="ARCHIVO:" />
+                            <h:inputText id="in_archivo" value="#{ing_decomiso_imagenView.selectedItem.ARCHIVO}" />
+
+                            <h:outputLabel for="in_nombre_archivo" value="NOMBRE_ARCHIVO:" />
+                            <h:inputText id="in_nombre_archivo" value="#{ing_decomiso_imagenView.selectedItem.NOMBRE_ARCHIVO}" />
+
+                            <h:outputLabel for="in_f_crea_fecha_log" value="F_CREA_FECHA_LOG:" />
+                            <p:calendar id="in_f_crea_fecha_log" value="#{ing_decomiso_imagenView.selectedItem.F_CREA_FECHA_LOG}" showOn="button" pattern="MM/dd/yyyy" navigator="true" yearRange="c-115:c+10" />
+
+                            <h:outputLabel for="in_f_crea_fecha" value="F_CREA_FECHA:" />
+                            <p:calendar id="in_f_crea_fecha" value="#{ing_decomiso_imagenView.selectedItem.F_CREA_FECHA}" showOn="button" pattern="MM/dd/yyyy" navigator="true" yearRange="c-115:c+10" />
+
+                            <h:outputLabel for="in_f_mod_fecha" value="F_MOD_FECHA:" />
+                            <p:calendar id="in_f_mod_fecha" value="#{ing_decomiso_imagenView.selectedItem.F_MOD_FECHA}" showOn="button" pattern="MM/dd/yyyy" navigator="true" yearRange="c-115:c+10" />
+
+                            <h:outputLabel for="in_s_crea_usuario" value="S_CREA_USUARIO:" />
+                            <h:inputText id="in_s_crea_usuario" value="#{ing_decomiso_imagenView.selectedItem.S_CREA_USUARIO}" />
+
+                            <h:outputLabel for="in_s_mod_usuario" value="S_MOD_USUARIO:" />
+                            <h:inputText id="in_s_mod_usuario" value="#{ing_decomiso_imagenView.selectedItem.S_MOD_USUARIO}" />
+
+                            <br />
+                            <h:panelGrid columns="2">
+                                <p:commandButton styleClass="ui-priority-primary" value="Guardar" title="Guardar" icon="fa fa-fw fa-save" actionListener="#{ing_decomiso_imagenView.save}" process="@form" update="@form, ing_decomiso_imagenMessages, ing_decomiso_imagenDetail, ing_decomiso_imagenList"  oncomplete="handleSubmit(xhr,status,args,'ing_decomiso_imagenDialog');" />
+                                <p:commandButton value="Cancelar" title="Cancelar" icon="fa fa-fw fa-rotate-left" onclick="PF('ing_decomiso_imagenDialog').hide();" />
+                            </h:panelGrid>
+                        </p:panelGrid>
+                    </h:form>
+                </p:outputPanel>
+            </p:outputPanel>
+        </p:dialog>
+        <p:panel id="ing_decomiso_imagenViewDetail" header="Detalle de ING_DECOMISO_IMAGEN">
+            <p:outputPanel  rendered="#{ing_decomiso_imagenView.status.description=='VIEW' and (not empty ing_decomiso_imagenView.selectedItem)}">
+
+                <p:tabView dynamic="true" cache="true" id="ing_decomiso_imagenTabDetail" prependId="false">
+
+
+
+
+                </p:tabView>
+            </p:outputPanel>
+        </p:panel>
+    </ui:composition>    
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+    <ui:composition>
+        <h:form id="cat_sede_telefonoToolbar" prependId="false">
+            <p:toolbar>
+                <f:facet name="left">
+                    <p:commandButton value="Nuevo" title="Nuevo" icon="fa fa-plus" actionListener="#{cat_sede_telefonoView.prepareNew}" process="@form" update="cat_sede_telefonoDetail" oncomplete="PF('cat_sede_telefonoDialog').show()"/>
+                </f:facet>
+            </p:toolbar>
+        </h:form>
+         <h:form id="cat_sede_telefonoMenuContext" prependId="false">
+            <p:contextMenu for="cat_sede_telefonoList">
+                <p:menuitem value="Editar" icon="ui-icon-pencil" actionListener="#{cat_sede_telefonoView.prepareEdit}" process="@form" update="cat_sede_telefonoDetail" oncomplete="PF('cat_sede_telefonoDialog').show()" />
+                <p:menuitem value="Eliminar"  icon="ui-icon-trash" process="@form" update="cat_sede_telefonoList" actionListener="#{cat_sede_telefonoView.delete}" />
+                <p:menuitem value="Ver Detalle" icon="ui-icon-search" actionListener="#{cat_sede_telefonoView.prepareView}" process="@form" update="cat_sede_telefonoViewDetail" />
+            </p:contextMenu>     
+            <p:dataTable var="item" value="#{cat_sede_telefonoView.lazyModel}" paginator="true" rows="10"
+                     paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                     rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{cat_sede_telefonoView.selectedItem}" id="cat_sede_telefonoList" lazy="true">
+
+                <p:column headerText="ID_SEDE_TELEFONO" sortBy="#{item.ID_SEDE_TELEFONO}" filterBy="#{item.ID_SEDE_TELEFONO}">
+                   <h:outputText value="#{item.ID_SEDE_TELEFONO}" />
+                </p:column>
+
+                <p:column headerText="TELEFONO" sortBy="#{item.TELEFONO}" filterBy="#{item.TELEFONO}">
+                   <h:outputText value="#{item.TELEFONO}" />
+                </p:column>
+
+                <p:column headerText="F_CREA_FECHA" sortBy="#{item.F_CREA_FECHA}" filterBy="#{item.F_CREA_FECHA}">
+                   <h:outputText value="#{item.F_CREA_FECHA}" />
+                </p:column>
+
+                <p:column headerText="F_MOD_FECHA" sortBy="#{item.F_MOD_FECHA}" filterBy="#{item.F_MOD_FECHA}">
+                   <h:outputText value="#{item.F_MOD_FECHA}" />
+                </p:column>
+
+                <p:column headerText="S_CREA_USUARIO" sortBy="#{item.S_CREA_USUARIO}" filterBy="#{item.S_CREA_USUARIO}">
+                   <h:outputText value="#{item.S_CREA_USUARIO}" />
+                </p:column>
+
+                <p:column headerText="S_MOD_USUARIO" sortBy="#{item.S_MOD_USUARIO}" filterBy="#{item.S_MOD_USUARIO}">
+                   <h:outputText value="#{item.S_MOD_USUARIO}" />
+                </p:column>
+
+            </p:dataTable>
+        </h:form>
+        <p:dialog header="Registro de cat_sede_telefono" widgetVar="cat_sede_telefonoDialog" appendTo="@(body)" modal="true" showEffect="fade" hideEffect="fade" resizable="false" minimizable="true" maximizable="true" position="center">
+            <p:outputPanel id="cat_sede_telefonoDetail" >
+                <p:messages id="cat_sede_telefonoMessages" showDetail="true" autoUpdate="true" closable="true" />
+
+                <p:outputPanel id="cat_sede_telefonoNewDetail" style="text-align:center;max-height:900px;overflow:auto" rendered="#{not empty cat_sede_telefonoView.selectedItem and (cat_sede_telefonoView.status.description=='NEW' || cat_sede_telefonoView.status.description=='EDIT')}" >
+                    <h:form id="cat_sede_telefonoNewForm" prependId="false">
+                        <p:panelGrid columns="2" columnClasses="label,value">
+
+                            <h:outputLabel for="in_id_sede_telefono" value="ID_SEDE_TELEFONO:" />
+                            <h:inputText id="in_id_sede_telefono" value="#{cat_sede_telefonoView.selectedItem.ID_SEDE_TELEFONO}" />
+
+                            <h:outputLabel for="in_telefono" value="TELEFONO:" />
+                            <h:inputText id="in_telefono" value="#{cat_sede_telefonoView.selectedItem.TELEFONO}" />
+
+                            <h:outputLabel for="in_f_crea_fecha" value="F_CREA_FECHA:" />
+                            <p:calendar id="in_f_crea_fecha" value="#{cat_sede_telefonoView.selectedItem.F_CREA_FECHA}" showOn="button" pattern="MM/dd/yyyy" navigator="true" yearRange="c-115:c+10" />
+
+                            <h:outputLabel for="in_f_mod_fecha" value="F_MOD_FECHA:" />
+                            <p:calendar id="in_f_mod_fecha" value="#{cat_sede_telefonoView.selectedItem.F_MOD_FECHA}" showOn="button" pattern="MM/dd/yyyy" navigator="true" yearRange="c-115:c+10" />
+
+                            <h:outputLabel for="in_s_crea_usuario" value="S_CREA_USUARIO:" />
+                            <h:inputText id="in_s_crea_usuario" value="#{cat_sede_telefonoView.selectedItem.S_CREA_USUARIO}" />
+
+                            <h:outputLabel for="in_s_mod_usuario" value="S_MOD_USUARIO:" />
+                            <h:inputText id="in_s_mod_usuario" value="#{cat_sede_telefonoView.selectedItem.S_MOD_USUARIO}" />
+
+                            <br />
+                            <h:panelGrid columns="2">
+                                <p:commandButton styleClass="ui-priority-primary" value="Guardar" title="Guardar" icon="fa fa-fw fa-save" actionListener="#{cat_sede_telefonoView.save}" process="@form" update="@form, cat_sede_telefonoMessages, cat_sede_telefonoDetail, cat_sede_telefonoList"  oncomplete="handleSubmit(xhr,status,args,'cat_sede_telefonoDialog');" />
+                                <p:commandButton value="Cancelar" title="Cancelar" icon="fa fa-fw fa-rotate-left" onclick="PF('cat_sede_telefonoDialog').hide();" />
+                            </h:panelGrid>
+                        </p:panelGrid>
+                    </h:form>
+                </p:outputPanel>
+            </p:outputPanel>
+        </p:dialog>
+        <p:panel id="cat_sede_telefonoViewDetail" header="Detalle de CAT_SEDE_TELEFONO">
+            <p:outputPanel  rendered="#{cat_sede_telefonoView.status.description=='VIEW' and (not empty cat_sede_telefonoView.selectedItem)}">
+
+                <p:tabView dynamic="true" cache="true" id="cat_sede_telefonoTabDetail" prependId="false">
+
+
+
+
+                </p:tabView>
+            </p:outputPanel>
+        </p:panel>
+    </ui:composition>    
+</html>
