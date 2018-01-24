@@ -23,28 +23,28 @@
                      paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                      rowsPerPageTemplate="5,10,15" selectionMode="single" selection="#{cat_estadoView.selectedItem}" id="cat_estadoList" lazy="true">
 
-                <p:column headerText="ID_ESTADO" sortBy="#{item.ID_ESTADO}" filterBy="#{item.ID_ESTADO}">
-                   <h:outputText value="#{item.ID_ESTADO}" />
+                <p:column headerText="id" sortBy="#{item.id}" filterBy="#{item.id}">
+                   <h:outputText value="#{item.id}" />
                 </p:column>
 
-                <p:column headerText="DESCRIPCION" sortBy="#{item.DESCRIPCION}" filterBy="#{item.DESCRIPCION}">
-                   <h:outputText value="#{item.DESCRIPCION}" />
+                <p:column headerText="descripcion" sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                   <h:outputText value="#{item.descripcion}" />
                 </p:column>
 
-                <p:column headerText="F_CREA_FECHA" sortBy="#{item.F_CREA_FECHA}" filterBy="#{item.F_CREA_FECHA}">
-                   <h:outputText value="#{item.F_CREA_FECHA}" />
+                <p:column headerText="f_CREA_FECHA" sortBy="#{item.f_CREA_FECHA}" filterBy="#{item.f_CREA_FECHA}">
+                   <h:outputText value="#{item.f_CREA_FECHA}" />
                 </p:column>
 
-                <p:column headerText="F_MOD_FECHA" sortBy="#{item.F_MOD_FECHA}" filterBy="#{item.F_MOD_FECHA}">
-                   <h:outputText value="#{item.F_MOD_FECHA}" />
+                <p:column headerText="f_MOD_FECHA" sortBy="#{item.f_MOD_FECHA}" filterBy="#{item.f_MOD_FECHA}">
+                   <h:outputText value="#{item.f_MOD_FECHA}" />
                 </p:column>
 
-                <p:column headerText="S_CREA_USUARIO" sortBy="#{item.S_CREA_USUARIO}" filterBy="#{item.S_CREA_USUARIO}">
-                   <h:outputText value="#{item.S_CREA_USUARIO}" />
+                <p:column headerText="s_CREA_USUARIO" sortBy="#{item.s_CREA_USUARIO}" filterBy="#{item.s_CREA_USUARIO}">
+                   <h:outputText value="#{item.s_CREA_USUARIO}" />
                 </p:column>
 
-                <p:column headerText="S_MOD_USUARIO" sortBy="#{item.S_MOD_USUARIO}" filterBy="#{item.S_MOD_USUARIO}">
-                   <h:outputText value="#{item.S_MOD_USUARIO}" />
+                <p:column headerText="s_MOD_USUARIO" sortBy="#{item.s_MOD_USUARIO}" filterBy="#{item.s_MOD_USUARIO}">
+                   <h:outputText value="#{item.s_MOD_USUARIO}" />
                 </p:column>
 
             </p:dataTable>
@@ -57,23 +57,23 @@
                     <h:form id="cat_estadoNewForm" prependId="false">
                         <p:panelGrid columns="2" columnClasses="label,value">
 
-                            <h:outputLabel for="in_id_estado" value="ID_ESTADO:" />
-                            <h:inputText id="in_id_estado" value="#{cat_estadoView.selectedItem.ID_ESTADO}" />
+                            <h:outputLabel for="in_id_estado" value="id:" rendered="#{1 ne cat_estadoView.status.code}"/>
+                            <h:inputText id="in_id_estado" value="#{cat_estadoView.selectedItem.id}" rendered="#{1 ne cat_estadoView.status.code}" />
 
-                            <h:outputLabel for="in_descripcion" value="DESCRIPCION:" />
-                            <h:inputText id="in_descripcion" value="#{cat_estadoView.selectedItem.DESCRIPCION}" />
+                            <h:outputLabel for="in_descripcion" value="descripcion:" />
+                            <h:inputText id="in_descripcion" value="#{cat_estadoView.selectedItem.descripcion}" />
 
-                            <h:outputLabel for="in_f_crea_fecha" value="F_CREA_FECHA:" />
-                            <p:calendar id="in_f_crea_fecha" value="#{cat_estadoView.selectedItem.F_CREA_FECHA}" showOn="button" pattern="MM/dd/yyyy" navigator="true" yearRange="c-115:c+10" />
+                            <h:outputLabel for="in_f_crea_fecha" value="f_CREA_FECHA:"  rendered="#{1 ne cat_estadoView.status.code}"/>
+                            <p:calendar id="in_f_crea_fecha" rendered="#{1 ne cat_estadoView.status.code}" value="#{cat_estadoView.selectedItem.f_CREA_FECHA}" showOn="button" pattern="MM/dd/yyyy" navigator="true" yearRange="c-115:c+10" />
 
-                            <h:outputLabel for="in_f_mod_fecha" value="F_MOD_FECHA:" />
-                            <p:calendar id="in_f_mod_fecha" value="#{cat_estadoView.selectedItem.F_MOD_FECHA}" showOn="button" pattern="MM/dd/yyyy" navigator="true" yearRange="c-115:c+10" />
+                            <h:outputLabel for="in_f_mod_fecha" value="f_MOD_FECHA:" rendered="#{1 ne cat_estadoView.status.code}" />
+                            <p:calendar id="in_f_mod_fecha" rendered="#{1 ne cat_estadoView.status.code}" value="#{cat_estadoView.selectedItem.f_MOD_FECHA}" showOn="button" pattern="MM/dd/yyyy" navigator="true" yearRange="c-115:c+10" />
 
-                            <h:outputLabel for="in_s_crea_usuario" value="S_CREA_USUARIO:" />
-                            <h:inputText id="in_s_crea_usuario" value="#{cat_estadoView.selectedItem.S_CREA_USUARIO}" />
+                            <h:outputLabel for="in_s_crea_usuario" value="s_CREA_USUARIO:" rendered="#{1 ne cat_estadoView.status.code}" />
+                            <h:inputText id="in_s_crea_usuario" value="#{cat_estadoView.selectedItem.s_CREA_USUARIO}" rendered="#{1 ne cat_estadoView.status.code}" />
 
-                            <h:outputLabel for="in_s_mod_usuario" value="S_MOD_USUARIO:" />
-                            <h:inputText id="in_s_mod_usuario" value="#{cat_estadoView.selectedItem.S_MOD_USUARIO}" />
+                            <h:outputLabel for="in_s_mod_usuario" value="s_MOD_USUARIO:" rendered="#{1 ne cat_estadoView.status.code}" />
+                            <h:inputText id="in_s_mod_usuario" value="#{cat_estadoView.selectedItem.s_MOD_USUARIO}" rendered="#{1 ne cat_estadoView.status.code}" />
 
                             <br />
                             <h:panelGrid columns="2">

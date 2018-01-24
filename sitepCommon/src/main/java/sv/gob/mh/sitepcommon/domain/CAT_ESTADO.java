@@ -46,7 +46,7 @@ public class CAT_ESTADO  implements BaseEntity<Long> {
    
    @Column(length = 300, nullable = true)
    /** DESCRIPCION DEL ESTADO */
-   public String dESCRIPCION;
+   public String descripcion;
    
    
    @Column(name = "F_CREA_FECHA", nullable = true)
@@ -73,31 +73,31 @@ public class CAT_ESTADO  implements BaseEntity<Long> {
    
    @OneToMany
    @JoinColumns({
-       @JoinColumn(name="CAT_ESTADO_ID_ESTADO", referencedColumnName="ID_ESTADO")
+       @JoinColumn(name="ID_ESTADO", referencedColumnName="ID_ESTADO")
    })
    Set<ING_DECOMISO> iNG_DECOMISOSet;
    
    @OneToMany
    @JoinColumns({
-       @JoinColumn(name="CAT_ESTADO_ID_ESTADO", referencedColumnName="ID_ESTADO")
+       @JoinColumn(name="ID_ESTADO", referencedColumnName="ID_ESTADO")
    })
    Set<CAT_TIPOS_DEVOLUCION> cAT_TIPOS_DEVOLUCIONSet;
    
    @OneToMany
    @JoinColumns({
-       @JoinColumn(name="CAT_ESTADO_ID_ESTADO", referencedColumnName="ID_ESTADO")
+       @JoinColumn(name="ID_ESTADO", referencedColumnName="ID_ESTADO")
    })
    Set<CAT_SEDE_LOG> cAT_SEDE_LOGSet;
    
    @OneToMany
    @JoinColumns({
-       @JoinColumn(name="CAT_ESTADO_ID_ESTADO", referencedColumnName="ID_ESTADO")
+       @JoinColumn(name="ID_ESTADO", referencedColumnName="ID_ESTADO")
    })
    Set<CAT_FUNCIONARIO> cAT_FUNCIONARIOSet;
    
    @OneToMany
    @JoinColumns({
-       @JoinColumn(name="CAT_ESTADO_ID_ESTADO", referencedColumnName="ID_ESTADO")
+       @JoinColumn(name="ID_ESTADO", referencedColumnName="ID_ESTADO")
    })
    Set<CAT_EMBALAJE> cAT_EMBALAJESet;
 
